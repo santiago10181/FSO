@@ -1,5 +1,24 @@
 import { useState } from 'react'
 
+const FeedBack = () =>{
+  return(
+    <p>No feedBack given</p>
+  )
+}
+
+const Statistics = ({good,neutral,bad,total,average,positive})=>{
+  return(
+    <div>
+      <Good add={good}/>
+      <Neutral neu={neutral} />
+      <Bad rest={bad} />
+      <p>all {total}</p>
+      <p>average {average}</p>
+      <p>positive {positive}%</p>
+    </div>
+  )
+}
+
 const Good = ({add}) =>{return <p>good {add}</p>}
 const Neutral = ({neu}) =>{return <p>neutral {neu}</p>}
 const Bad = ({rest}) =>{return <p>bad {rest}</p>}
@@ -12,11 +31,9 @@ const App = () => {
 
   const hand_good= () => {
     setGood(good + 1)
-    average(good,bad)
   }
   const hand_neutral= () => {
     setNeutral(neutral + 1)
-    average(good,bad)
   }
   const hand_bad= () => {
     setBad(bad + 1)
@@ -33,12 +50,9 @@ const positive = total ? (good / total) * 100 : 0
       <button onClick={hand_neutral}>neutral</button>
       <button onClick={hand_bad}>bad</button>
       <h2>Statistics</h2>
-      <Good add={good}/>
-      <Neutral neu={neutral} />
-      <Bad rest={bad} />
-      <p>all {total}</p>
-      <p>average {average}</p>
-      <p>positive {positive}%</p>
+      {total? 
+      <Statistics good={good} bad={bad} neutral={neutral} total={total} average={average} positive={positive}/>
+      : <FeedBack />}
     </div>
     )
 }
